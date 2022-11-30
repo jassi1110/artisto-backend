@@ -172,10 +172,10 @@ exports.loginArtist = async (req, res) => {
 
         const x = await reg.checkRegistration('artist', phone);
 
-        console.log(phone)
-        console.log(password)
-        console.log(x[0])
-        console.log(process.env.SECRET_KEY)
+        // console.log(phone)
+        // console.log(password)
+        // console.log(x[0])
+        // console.log(process.env.SECRET_KEY)
 
         if (x[0] === null) {
             return res.status(401).json({

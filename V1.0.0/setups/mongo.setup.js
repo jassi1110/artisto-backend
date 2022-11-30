@@ -9,7 +9,7 @@ exports.checkRegistration = async (collection, phone) => {
       MongoClient.connect(url, function (err, db) {
         if (err) rej(err);
         var dbo = db.db(process.env.DBNAME);
-        dbo.collection(`${collection}`).findOne({"phone" : `${phone}`}, function (err, result) {
+        dbo.collection(`${collection}`).findOne({"phone" : phone}, function (err, result) {
           if (err) throw err;
           obj.push(result);
           res(obj);

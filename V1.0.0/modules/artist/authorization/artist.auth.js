@@ -87,7 +87,7 @@ exports.sendOTP = async (req, res) => {
 
 exports.newArtist = async (req, res) => {
     try {
-        const { username, password, passwordCheck, email, dob, gender, category } = req.body
+        const { username, password, passwordCheck, email, dob, gender, category, phone } = req.body
 
         if (!req.body) {
             return res.status(401).json({
@@ -96,14 +96,14 @@ exports.newArtist = async (req, res) => {
             })
         }
 
-        if (!username || !password || !passwordCheck || !email || !dob || !gender || !category) {
+        if (!username || !password || !passwordCheck || !email || !dob || !gender || !category || !phone) {
             return res.status(401).json({
                 status: false,
                 message: "Field Empty. Please fill all the details"
             })
         }
 
-        const x = await reg.checkRegistration('artist', email);
+        const x = await reg.checkRegistration('artist', phone);
 
         if (x[0] != null) {
             return res.status(401).json({
@@ -125,7 +125,8 @@ exports.newArtist = async (req, res) => {
             email: email,
             dob: dob,
             gender: gender,
-            category: category
+            category: category,
+            phone: phone
         }
         const d = await reg.addArtist('artist', key);
 
@@ -153,7 +154,7 @@ exports.newArtist = async (req, res) => {
 
 exports.loginArtist = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { phone, password } = req.body;
 
         if (!req.body) {
             return res.status(401).json({
@@ -162,16 +163,16 @@ exports.loginArtist = async (req, res) => {
             })
         }
 
-        if (!email || !password) {
+        if (!phone || !password) {
             return res.status(401).json({
                 status: false,
                 message: "Fields Empty"
             })
         }
 
-        const x = await reg.checkRegistration('artist', email);
+        const x = await reg.checkRegistration('artist', phone);
 
-        console.log(x)
+        // console.log(x[0])
 
         if (x[0] == null) {
             return res.status(401).json({
@@ -184,7 +185,7 @@ exports.loginArtist = async (req, res) => {
         var decrypted = bytes.toString(cryptoJS.enc.Utf8);
 
         if (decrypted === password) {
-            const accessToken = jwt.sign({ id: `${x[0].email}` }, process.env.JWT_KEY);
+            const accessToken = jwt.sign({ id: `${x[0].phone}` }, process.env.JWT_KEY);
 
             return res.status(200).json({
                 status: false,

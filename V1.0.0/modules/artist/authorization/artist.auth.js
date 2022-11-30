@@ -176,7 +176,7 @@ exports.loginArtist = async (req, res) => {
         console.log(password)
         console.log(x[0])
 
-        if (x[0] == null) {
+        if (x[0] === null) {
             return res.status(401).json({
                 status: false,
                 message: "User doesn't exist"

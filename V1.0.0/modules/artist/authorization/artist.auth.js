@@ -190,7 +190,7 @@ exports.loginArtist = async (req, res) => {
             const accessToken = jwt.sign({ id: `${x[0].phone}` }, process.env.JWT_KEY);
 
             return res.status(200).json({
-                status: false,
+                status: true,
                 message: "User Successfully Logged In",
                 accessToken: accessToken
             })

@@ -155,10 +155,13 @@ exports.newArtist = async (req, res) => {
 exports.loginArtist = async (req, res) => {
     try {
         z = req.fields;
+        // console.log(z);
         z = JSON.parse(JSON.stringify(z));
+        console.log(z);
 
         const {phone,password} = z;
-        // console.log(z);
+        console.log(z.phone);
+        console.log(z.password);
         if (!req.body) {
             logger.info("Request Completed");
             return res.status(401).json({

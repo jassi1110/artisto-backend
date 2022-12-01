@@ -19,10 +19,9 @@ const eplMiddleware  = epl({
     useLevel : "http"
 })
 
+app.use(eplMiddleware)
+
 port = process.env.PORT
-// app.use(eplMiddleware);
-
-
 app.get('/api/v1' , (req,res)=>{
     res.send("Welcome to the Artisto-Backend");
 })

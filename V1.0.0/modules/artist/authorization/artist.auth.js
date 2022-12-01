@@ -154,30 +154,31 @@ exports.newArtist = async (req, res) => {
 
 exports.loginArtist = async (req, res) => {
     try {
-        const { phone, password } = req.body;
+        z = req.fields;
+        z = JSON.parse(JSON.stringify(z));
 
+        const {phone,password} = z;
+        // console.log(z);
         if (!req.body) {
+            logger.info("Request Completed");
             return res.status(401).json({
                 status: false,
                 message: "Body Empty."
             })
         }
-
+        
         if (!phone || !password) {
+            logger.info("Request Completed");
             return res.status(401).json({
                 status: false,
                 message: "Fields Empty"
             })
         }
-
-        const x = await reg.checkRegistration('artist', phone);
-
-        // console.log(phone)
-        // console.log(password)
-        // console.log(x[0])
-        // console.log(process.env.SECRET_KEY)
-
+        
+        const x = await reg.checkRegistration('artist', Number(phone));
+        
         if (x[0] === null) {
+            logger.info("Request Completed");
             return res.status(401).json({
                 status: false,
                 message: "User doesn't exist"
@@ -186,10 +187,9 @@ exports.loginArtist = async (req, res) => {
 
         var bytes = cryptoJS.AES.decrypt(x[0].password, process.env.SECRET_KEY);
         var decrypted = bytes.toString(cryptoJS.enc.Utf8);
-
         if (decrypted === password) {
             const accessToken = jwt.sign({ id: `${x[0].phone}` }, process.env.JWT_KEY);
-
+            logger.info("Request Completed")
             return res.status(200).json({
                 status: true,
                 message: "User Successfully Logged In",
@@ -197,13 +197,15 @@ exports.loginArtist = async (req, res) => {
             })
         }
         else {
+            logger.info("Request Completed")
             return res.status(401).json({
                 status: false,
                 message: "Login Failed"
             })
         }
-
+        
     } catch (error) {
+        logger.error("Request Errored")
         return res.status(401).json({
             status: false,
             err: `${error}`

@@ -190,6 +190,8 @@ exports.loginArtist = async (req, res) => {
 
         var bytes = cryptoJS.AES.decrypt(x[0].password, process.env.SECRET_KEY);
         var decrypted = bytes.toString(cryptoJS.enc.Utf8);
+
+        console.log(decrypted + "hello");
         if (decrypted === password) {
             const accessToken = jwt.sign({ id: `${x[0].phone}` }, process.env.JWT_KEY);
             logger.info("Request Completed")

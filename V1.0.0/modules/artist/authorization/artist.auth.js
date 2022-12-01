@@ -157,11 +157,11 @@ exports.loginArtist = async (req, res) => {
         z = req.fields;
         // console.log(z);
         z = JSON.parse(JSON.stringify(z));
-        console.log(z);
+        // console.log(z);
 
         const {phone,password} = z;
-        console.log(z.phone);
-        console.log(z.password);
+        // console.log(z.phone);
+        // console.log(z.password);
         if (!req.body) {
             logger.info("Request Completed");
             return res.status(401).json({
@@ -179,7 +179,7 @@ exports.loginArtist = async (req, res) => {
         }
         
         const x = await reg.checkRegistration('artist', Number(phone));
-        
+        console.log(x);
         if (x[0] === null) {
             logger.info("Request Completed");
             return res.status(401).json({

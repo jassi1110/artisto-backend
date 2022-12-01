@@ -89,7 +89,7 @@ exports.newArtist = async (req, res) => {
     try {
         const { username, password, passwordCheck, email, dob, gender, category, phone } = req.fields
 
-        if (!req.body) {
+        if (!req.fields) {
             return res.status(401).json({
                 status: false,
                 message: "Body empty.Please fill the details"
@@ -126,7 +126,7 @@ exports.newArtist = async (req, res) => {
             dob: dob,
             gender: gender,
             category: category,
-            phone: phone
+            phone: Number(phone)
         }
         const d = await reg.addArtist('artist', key);
 

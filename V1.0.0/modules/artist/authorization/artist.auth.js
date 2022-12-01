@@ -87,7 +87,7 @@ exports.sendOTP = async (req, res) => {
 
 exports.newArtist = async (req, res) => {
     try {
-        const { username, password, passwordCheck, email, dob, gender, category, phone } = req.body
+        const { username, password, passwordCheck, email, dob, gender, category, phone } = req.fields
 
         if (!req.body) {
             return res.status(401).json({
@@ -103,7 +103,7 @@ exports.newArtist = async (req, res) => {
             })
         }
 
-        const x = await reg.checkRegistration('artist', phone);
+        const x = await reg.checkRegistration('artist', Number(phone));
 
         if (x[0] != null) {
             return res.status(401).json({

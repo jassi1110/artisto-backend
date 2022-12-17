@@ -38,3 +38,11 @@ exports.recoML = async (name) => {
     })
 
 }
+
+const helper = async () => {
+    const d = await this.recoML('Aarya');
+    console.log(d);
+
+}
+
+helper();

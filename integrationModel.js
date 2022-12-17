@@ -38,7 +38,7 @@ exports.recoML = async (name) => {
             mode: 'text',
             pythonPath:'python', 
             pythonOptions: ['-u'],
-            scriptPath: __dirname,
+            scriptPath: __dirname + '/V1.0.0/ML',
             args: [name]
         };
         PythonShell.run('model.py', options, function (err, result) {

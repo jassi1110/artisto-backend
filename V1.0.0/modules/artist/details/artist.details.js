@@ -4,48 +4,53 @@ const mail = require('../../../utils/sendMail')
 const logger = require('../../../setups/pino.setup')
 const { recoML } = require('../../../utils/integrationModel')
 
-exports.showRecords = async(req,res)=>{
-    try {
-        const d = await recoML;
 
-        d
-        .then(code=>{
-            console.log(code.toString());
-
-            return res.status(200).json({
-                status:true,
-                message : code
-            })
-        })
-        .catch(err=>{
-            return res.status(401).json({
-                status:false,
-                err:err
-            })
-        })
-    } catch (error) {
-        return res.status(401).json({
-            status:false,
-            err:error
-        })
-    }
-}
 exports.getDetails = async (req, res) => {
     try {
 
-        const id = req.user.id;
-        const x = reg.checkRegistration('artist', id);
+        const  name  = req.query.name
+        // console.log(name)
+        if (name == null) {
+            // console.log("Hello World")
+            const userDetails = await reg.artistDetails('ml');
 
-        return res.status(200).json({
-            status: true,
-            message: x[0]
-        })
-
+            if(!userDetails){
+                logger.error("Request Errored");
+                return res.status(401).json({
+                    status:false,
+                    message:"Details not fetched"
+                })
+            }
+            else{
+                logger.info("Request Completed")
+                return res.status(200).json({
+                    status:true,
+                    Details:userDetails
+                })
+            }
+        }
+        else {
+            const d = await recoML(name);
+            if(!d){
+                logger.error("Request Errored");
+                return res.status(401).json({
+                    status:false,
+                    message:"No Artist found" 
+                })
+            }
+            else{
+                logger.info("Request Completed");
+                return res.status(200).json({
+                    status:true,
+                    message : d
+                })
+            }
+        }
     } catch (error) {
         logger.error("Request Errored")
         return res.status(401).json({
-            status: false,
-            err: `${error}`
+            status:false,
+            err:`${error}` || "Error Found"
         })
     }
 }
@@ -62,7 +67,7 @@ exports.updateDetails = async (req, res) => {
                 message: "Body empty.Please fill the details"
             })
         }
-        
+
         if (!username || !password || !dob || !gender || !category) {
             logger.error("Request Errored")
             return res.status(401).json({
@@ -72,39 +77,40 @@ exports.updateDetails = async (req, res) => {
         }
 
         const ID = {
-            email:id
+            email: id
         }
 
         const key = {
-            $set : {
-                username:username,
-                dob:dob,
-                gender:gender,
-                category:category
+            $set: {
+                username: username,
+                dob: dob,
+                gender: gender,
+                category: category
             }
         }
 
-        const d = reg.updateArtist('artist',key,ID);
+        const d = reg.updateArtist('artist', key, ID);
 
-        if(!d){
+        if (!d) {
             logger.error("Request Completed")
             return res.status(401).json({
-                status:false,
-                err:"Artist not updated"
+                status: false,
+                err: "Artist not updated"
             })
         }
-        else{
+        else {
             logger.info("Request Completed");
             return res.status(200).json({
-                status:true,
-                message:"Updated Successfully"
+                status: true,
+                message: "Updated Successfully"
             })
         }
     } catch (error) {
         logger.error("Request Errored")
         return res.status(401).json({
-            status:false,
-            err:`${error}`
+            status: false,
+            err: `${error}`
         })
     }
 }
+

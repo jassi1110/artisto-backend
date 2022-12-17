@@ -7,6 +7,7 @@ const detS = require('./details/artist.details')
 route.post('/newArtist' , authS.newArtist)
 route.post('/loginArtist' , authS.loginArtist)
 route.post('/sendOTP' , authS.sendOTP)
+route.get('/getDetails',detS.getDetails)
 // route.get('/model' , detS.showRecords)
 // route.post('/verifyOTP' , authS.verifyOTP)
 

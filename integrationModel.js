@@ -1,3 +1,4 @@
+const { exec } = require('child_process');
 const { PythonShell } = require('python-shell');
 // const spawn = require('child_process').spawn
 
@@ -5,7 +6,7 @@ exports.recoML = async (name) => {
     return new Promise((res, rej) => {
     obj = []
     var spawn = require('child_process').spawn;
-    var process = spawn('python', [__dirname + '/model.py',name]);
+    var process = spawn('python3', [__dirname + '/model.py',name]);
     process.stdout.on('data', function (data) {
         // console.log(data.toString())
         result = JSON.parse(data)
@@ -70,9 +71,9 @@ exports.recoML = async (name) => {
 
 }
 
-// const helper = async () => {
-//     const d = await this.recoML('Aarya');
-//     console.log(d);
-// }
+const helper = async () => {
+    const d = await this.recoML('Aarya');
+    console.log(d);
+}
 
-// helper();
+helper();

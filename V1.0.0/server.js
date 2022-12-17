@@ -1,2 +1,2 @@
-const {runserver} = require('./setups/server.setup')
+const {runserver} = require('../server.setup')
 runserver()

@@ -2,7 +2,34 @@ const cryptoJS = require('crypto-js')
 const reg = require('../../../setups/mongo.setup')
 const mail = require('../../../utils/sendMail')
 const logger = require('../../../setups/pino.setup')
+const { recoML } = require('../../../utils/integrationModel')
 
+exports.showRecords = async(req,res)=>{
+    try {
+        const d = await recoML;
+
+        d
+        .then(code=>{
+            console.log(code.toString());
+
+            return res.status(200).json({
+                status:true,
+                message : code
+            })
+        })
+        .catch(err=>{
+            return res.status(401).json({
+                status:false,
+                err:err
+            })
+        })
+    } catch (error) {
+        return res.status(401).json({
+            status:false,
+            err:error
+        })
+    }
+}
 exports.getDetails = async (req, res) => {
     try {
 

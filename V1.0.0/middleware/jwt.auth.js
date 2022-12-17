@@ -21,7 +21,7 @@ exports.auth = async(req,res,next)=>{
                 logger.error("Request Errored")
                 return res.status(401).json({
                     success:false,
-                    err:`${error}` || "Verification Failed"
+                    err:`${err}` || "Verification Failed"
                 })
             }
             else{

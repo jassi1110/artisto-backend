@@ -4,7 +4,7 @@
   "description": "this is artisto-backend",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon V1.0.0/server",
+    "start": "node V1.0.0/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

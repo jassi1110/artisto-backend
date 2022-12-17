@@ -7,7 +7,7 @@ name = sys.argv[1]
 def recommendationEngine():
     column_names = ['user_id', 'item_id', 'rating', 'Artist']
     # df = pd.read_csv(os.path.join(os.path.dirname(__file__), f"..\\ML\\jasnoor.csv"), sep=',', names=column_names)
-    df = pd.read_csv(os.path.join(os.path.dirname(__file__), f".\\jasnoor.csv"), sep=',', names=column_names)
+    df = pd.read_csv(os.path.join(os.path.dirname(__file__), f".\\V1.0.0\\ML\\jasnoor.csv"), sep=',', names=column_names)
     df.groupby('Artist')['rating'].mean().sort_values(ascending=False).head()
     df.groupby('Artist')['rating'].count().sort_values(ascending=False).head()
     ratings = pd.DataFrame(df.groupby('Artist')['rating'].mean())

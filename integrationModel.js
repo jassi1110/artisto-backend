@@ -5,7 +5,7 @@ exports.recoML = async (name) => {
     return new Promise((res, rej) => {
     obj = []
     var spawn = require('child_process').spawn;
-    var process = spawn('python', ['./model.py',name],{shell:true});
+    var process = spawn('python3', ['./model.py',name]);
     process.stdout.on('data', function (data) {
         // console.log(data.toString())
         result = JSON.parse(data)
@@ -70,9 +70,9 @@ exports.recoML = async (name) => {
 
 }
 
-// const helper = async () => {
-//     const d = await this.recoML('Aarya');
-//     console.log(d);
-// }
+const helper = async () => {
+    const d = await this.recoML('Aarya');
+    console.log(d);
+}
 
-// helper();
+helper();

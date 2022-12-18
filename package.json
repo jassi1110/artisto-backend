@@ -38,6 +38,8 @@
     "pino": "^7.11.0",
     "pino-debug": "^2.0.0",
     "pino-http": "^6.6.0",
-    "python-shell": "^3.0.1"
+    "pm2": "^5.2.2",
+    "python-shell": "^3.0.1",
+    "shelljs": "^0.8.5"
   }
 }

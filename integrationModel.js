@@ -8,37 +8,8 @@ exports.recoML = async (name) => {
     return new Promise((res, rej) => {
     obj = []
 
-    shell.exec(`python model.py ${name} --interpreter=./python/Scripts/python.exe`, function(code, output) {
-        result = JSON.parse(output)
-        i = 0;
-            for (var key in result.Correlation) {
-                if (i > 3) {
-                    break;
-                }
-                else if (result.Correlation[key] == 1) {
-                    continue;
-                }
-                else {
-                    myJSON = {
-                        name: key,
-                        Correlation: result.Correlation[key],
-                        Rating: result.rating[key],
-                        "Number of Ratings": result["num of ratings"][key]
-                    }
-                    obj.push(myJSON);
-                }
-                i++;
-            }
-            i = 0;
-            res(obj)
-        obj = []
-    // res(output)
-});
-    // var spawn = require('child_process').spawn;
-    // var process = spawn('python', [__dirname + '/model.py',name]);
-    // process.stdout.on('data', function (data) {
-    //     // console.log(data.toString())
-    //     result = JSON.parse(data)
+    // shell.exec(`python model.py ${name} --interpreter=./python/Scripts/python.exe`, function(code, output) {
+    //     result = JSON.parse(output)
     //     i = 0;
     //         for (var key in result.Correlation) {
     //             if (i > 3) {
@@ -61,6 +32,37 @@ exports.recoML = async (name) => {
     //         i = 0;
     //         res(obj)
     //     obj = []
+    // res(output)
+// });
+    var spawn = require('child_process').spawn;
+    const py_path = path.join(__dirname, '/model.py');
+    const python_exe_path = path.join(__dirname, 'python/Scripts/python.exe');
+    var process = spawn(`${python_exe_path}`, [`${py_path}`,name]);
+    process.stdout.on('data', function (data) {
+        // console.log(data.toString())
+        result = JSON.parse(data)
+        i = 0;
+            for (var key in result.Correlation) {
+                if (i > 3) {
+                    break;
+                }
+                else if (result.Correlation[key] == 1) {
+                    continue;
+                }
+                else {
+                    myJSON = {
+                        name: key,
+                        Correlation: result.Correlation[key],
+                        Rating: result.rating[key],
+                        "Number of Ratings": result["num of ratings"][key]
+                    }
+                    obj.push(myJSON);
+                }
+                i++;
+            }
+            i = 0;
+            res(obj)
+        obj = []
     //     // res();
     // const py_path = path.join(__dirname, '');
     // const python_exe_path = path.join(__dirname, 'python/Scripts/python.exe');
@@ -96,7 +98,7 @@ exports.recoML = async (name) => {
     //         i = 0;
     //         res(obj)
     //     obj = []
-        // });
+        });
     })
 
 }

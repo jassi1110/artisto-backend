@@ -2,7 +2,7 @@ const cryptoJS = require('crypto-js')
 const reg = require('../../../setups/mongo.setup')
 const mail = require('../../../utils/sendMail')
 const logger = require('../../../setups/pino.setup')
-const {recoML} = require('../../../../integrationModel')
+const {recoML} = require('../../../integrationModel')
 
 
 exports.getDetails = async (req, res) => {

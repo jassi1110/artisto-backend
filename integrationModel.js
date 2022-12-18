@@ -1,5 +1,5 @@
-const { exec } = require('child_process');
 const { PythonShell } = require('python-shell');
+const path = require('path');
 // const spawn = require('child_process').spawn
 
 exports.recoML = async (name) => {
@@ -33,12 +33,13 @@ exports.recoML = async (name) => {
     //         res(obj)
     //     obj = []
     //     // res();
-
+    const py_path = path.join(__dirname, '');
+    const python_exe_path = path.join(__dirname, 'python/Scripts/python.exe');
         let options = {
             mode: 'text',
-            pythonPath:'python', 
+            pythonPath:python_exe_path, 
             pythonOptions: ['-u'],
-            scriptPath: __dirname + '/V1.0.0/ML',
+            scriptPath: py_path,
             args: [name]
         };
         PythonShell.run('model.py', options, function (err, result) {
@@ -71,9 +72,9 @@ exports.recoML = async (name) => {
 
 }
 
-// const helper = async () => {
-//     const d = await this.recoML('Aarya');
-//     console.log(d);
-// }
+const helper = async () => {
+    const d = await this.recoML('Aarya');
+    console.log(d);
+}
 
-// helper();
+helper();
